@@ -1,5 +1,5 @@
 import express from "express";
-import Contest from "../models/Contest.js";
+import Contest from "../models/contest.js";
 
 const router = express.Router();
 

@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import contestRoutes from "./routes/contests.js";
 import userRoutes from "./routes/users.js";
 import { fetchContests } from "./services/contestFetcher.js";
+import cron from "node-cron";
 
 //loading the env variables
 dotenv.config();

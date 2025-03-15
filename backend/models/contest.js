@@ -29,4 +29,6 @@ const contestSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Contest", contestSchema);
+const Contest =
+  mongoose.models.Contest || mongoose.model("Contest", contestSchema);
+export default Contest;
