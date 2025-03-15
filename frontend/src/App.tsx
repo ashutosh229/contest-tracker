@@ -36,9 +36,13 @@ function App() {
 
   const toggleBookmark = async (contestId: string) => {
     try {
-      await axios.post(`${BACKEND_DOMAIN}/api/contests/${contestId}/bookmark`, {
-        withCredentials: true,
-      });
+      await axios.post(
+        `${BACKEND_DOMAIN}/api/contests/${contestId}/bookmark`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       fetchContests();
       toast.success("Bookmark updated");
     } catch (error) {
