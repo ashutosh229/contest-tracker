@@ -22,7 +22,7 @@ function App() {
 
   const fetchContests = async () => {
     try {
-      const response = await axios.get(`${BACKEND_DOMAIN}/api/contests`, {
+      const response = await axios.get(`/api/contests`, {
         withCredentials: true,
       });
       const data = response.data;
@@ -37,7 +37,7 @@ function App() {
   const toggleBookmark = async (contestId: string) => {
     try {
       await axios.post(
-        `${BACKEND_DOMAIN}/api/contests/${contestId}/bookmark`,
+        `/api/contests/${contestId}/bookmark`,
         {},
         {
           withCredentials: true,
