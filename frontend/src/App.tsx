@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import type { Contest } from "./types";
 import axios from "axios";
 
-const BACKEND_DOMAIN = "http://localhost:8000";
+const BACKEND_DOMAIN = import.meta.env.VITE_BACKEND_DOMAIN;
 
 function App() {
   const [contests, setContests] = useState<Contest[]>([]);
