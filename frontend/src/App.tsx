@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar, Filter, Bookmark, Youtube } from "lucide-react";
+import { Calendar, Filter, Bookmark, Youtube, Axis3D } from "lucide-react";
 import { format, isPast, addWeeks } from "date-fns";
 import toast, { Toaster } from "react-hot-toast";
 import type { Contest } from "./types";
@@ -22,7 +22,8 @@ function App() {
 
   const fetchContests = async () => {
     try {
-      const response = await axios.get(`/api/contests`, {
+      const response = await axios.get("/api/contests/", {
+        headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
       const data = response.data;
@@ -40,6 +41,9 @@ function App() {
         `/api/contests/${contestId}/bookmark`,
         {},
         {
+          headers: {
+            "Content-Type": "application/json",
+          },
           withCredentials: true,
         }
       );
