@@ -62,7 +62,7 @@ export async function fetchContests() {
       );
     }
   } catch (error) {
-    console.error("Error fetching contests:", error);
+    console.log("Error fetching contests:", error);
     throw error;
   }
 }

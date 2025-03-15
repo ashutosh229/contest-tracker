@@ -36,7 +36,7 @@ cron.schedule("0 * * * *", async () => {
     await fetchContests();
     console.log("Contests fetched successfully");
   } catch (error) {
-    console.error("Error fetching contests:", error);
+    console.log("Error fetching contests:", error);
   }
 });
 
@@ -46,7 +46,7 @@ cron.schedule("0 */6 * * *", async () => {
     await updateYoutubeSolutions();
     console.log("YouTube solutions updated successfully");
   } catch (error) {
-    console.error("Error updating YouTube solutions:", error);
+    console.log("Error updating YouTube solutions:", error);
   }
 });
 

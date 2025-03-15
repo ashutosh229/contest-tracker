@@ -37,7 +37,7 @@ export async function updateYoutubeSolutions() {
       }
     }
   } catch (error) {
-    console.error("Error updating YouTube solutions:", error);
+    console.log("Error updating YouTube solutions:", error);
     throw error;
   }
 }
