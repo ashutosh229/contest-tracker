@@ -1,8 +1,26 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  email: String,
-  bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Contest" }],
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  preferences: {
+    platforms: [
+      {
+        type: String,
+        enum: ["Codeforces", "CodeChef"], //removed the leetcode from here
+      },
+    ],
+    reminderTiming: [Number],
+    reminderType: [
+      {
+        type: String,
+        enum: ["email", "sms"],
+      },
+    ],
+  },
 });
 
 export default mongoose.model("User", userSchema);
