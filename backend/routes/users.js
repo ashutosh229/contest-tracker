@@ -15,7 +15,7 @@ router.post("/preferences", async (req, res) => {
     res.json(user);
   } catch (error) {
     console.log("post route users");
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 });

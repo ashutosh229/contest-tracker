@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     res.json(contests);
   } catch (error) {
     console.log("Get route contests");
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -24,7 +24,7 @@ router.post("/:id/bookmark", async (req, res) => {
     res.json(contest);
   } catch (error) {
     console.log("post route contests");
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 });
