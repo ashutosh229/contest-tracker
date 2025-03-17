@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { Calendar, Filter, Bookmark, Youtube, Axis3D } from "lucide-react";
+import { Calendar, Filter, Bookmark } from "lucide-react";
 import { format, isPast, addWeeks } from "date-fns";
 import toast, { Toaster } from "react-hot-toast";
 import type { Contest } from "./types";
-import axios from "axios";
 
-// const BACKEND_DOMAIN = import.meta.env.VITE_BACKEND_DOMAIN;
+const BACKEND_DOMAIN = "http://localhost:3000";
 
 function App() {
   const [contests, setContests] = useState<Contest[]>([]);
@@ -18,16 +17,26 @@ function App() {
 
   useEffect(() => {
     fetchContests();
-  }, [selectedPlatforms]);
+  }, []);
 
   const fetchContests = async () => {
     try {
-      const response = await axios.get("/api/contests/", {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      const data = response.data;
-      setContests(data);
+      const response = await fetch(
+        `${BACKEND_DOMAIN}/api/contest/get_all_contests`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.status === true) {
+        setContests(data.data);
+        toast.success("Contests fetched");
+      } else {
+        toast.error("Error fetching the contests due to false status");
+      }
     } catch (error) {
       console.log("fetch contests error");
       console.log(error);
@@ -37,18 +46,23 @@ function App() {
 
   const toggleBookmark = async (contestId: string) => {
     try {
-      await axios.post(
-        `/api/contests/${contestId}/bookmark`,
-        {},
+      const response = await fetch(
+        `${BACKEND_DOMAIN}/api/contest/${contestId}/bookmark`,
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
+          body: JSON.stringify({}),
         }
       );
-      fetchContests();
-      toast.success("Bookmark updated");
+      const data = await response.json();
+      if (data.status) {
+        fetchContests();
+        toast.success("Bookmark updated");
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
       console.log("toggle contests error");
       console.log(error);
@@ -98,7 +112,7 @@ function App() {
             <h2 className="text-lg font-medium">Filter Platforms</h2>
           </div>
           <div className="mt-4 flex gap-4">
-            {["Codeforces", "CodeChef", "LeetCode"].map((platform) => (
+            {["Codeforces", "CodeChef"].map((platform) => (
               <label key={platform} className="inline-flex items-center">
                 <input
                   type="checkbox"
@@ -124,7 +138,7 @@ function App() {
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <ul className="divide-y divide-gray-200">
             {filteredContests.map((contest) => (
-              <li key={contest.id} className="p-6 hover:bg-gray-50">
+              <li key={contest._id} className="p-6 hover:bg-gray-50">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-4">
@@ -154,7 +168,7 @@ function App() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    {contest.solutionUrl && (
+                    {/* {contest.solutionUrl && (
                       <a
                         href={contest.solutionUrl}
                         target="_blank"
@@ -163,9 +177,9 @@ function App() {
                       >
                         <Youtube className="w-5 h-5" />
                       </a>
-                    )}
+                    )} */}
                     <button
-                      onClick={() => toggleBookmark(contest.id)}
+                      onClick={() => toggleBookmark(contest._id)}
                       className={`${
                         contest.isBookmarked
                           ? "text-yellow-400 hover:text-yellow-500"

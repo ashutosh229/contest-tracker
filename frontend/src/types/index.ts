@@ -1,12 +1,12 @@
 export interface Contest {
-    id: string;
+    _id: string;
     platform: 'Codeforces' | 'CodeChef'; //removed leetcode from here
     name: string;
     startTime: string;
     duration: number;
     url: string;
-    solutionUrl?: string;
     isBookmarked?: boolean;
+    __v: number;
 }
 
 export interface User {
