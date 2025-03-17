@@ -10,8 +10,6 @@ function App() {
   const [contests, setContests] = useState<Contest[]>([]);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([
     "Codeforces",
-    // "CodeChef",
-    // "LeetCode",
   ]);
   const [showPastContests, setShowPastContests] = useState(false);
 

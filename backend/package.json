@@ -13,7 +13,7 @@
     "tracker",
     "application",
     "backend"
-  ],
+  ] ,
   "author": "Ashutosh Kumar Jha",
   "license": "ISC",
   "dependencies": {
