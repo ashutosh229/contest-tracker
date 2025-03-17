@@ -24,6 +24,7 @@ export const getAllContests = async (req, res) => {
     }
 
     const allContests = await Contest.find();
+
     res.status(200).json({
       status: true,
       data: allContests,
