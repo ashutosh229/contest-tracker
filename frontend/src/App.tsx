@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Calendar, Filter, Bookmark } from "lucide-react";
-import { format, isPast, addWeeks } from "date-fns";
+
 import toast, { Toaster } from "react-hot-toast";
 import type { Contest } from "./types";
+import { format, isPast, addWeeks, differenceInSeconds } from "date-fns";
 
 const BACKEND_DOMAIN = "http://localhost:3000";
 
@@ -12,10 +13,18 @@ function App() {
     "Codeforces",
   ]);
   const [showPastContests, setShowPastContests] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     fetchContests();
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      updateTimeRemaining();
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [contests]);
 
   const fetchContests = async () => {
     try {
@@ -40,6 +49,31 @@ function App() {
       console.log(error);
       toast.error("Failed to fetch contests");
     }
+  };
+
+  const updateTimeRemaining = (contestsData = contests) => {
+    const now = new Date();
+    const updatedTimes: { [key: string]: string } = {};
+
+    contestsData.forEach((contest) => {
+      const startTime = new Date(contest.startTime);
+      const diffInSeconds = differenceInSeconds(startTime, now);
+
+      if (diffInSeconds > 0) {
+        const days = Math.floor(diffInSeconds / (3600 * 24));
+        const hours = Math.floor((diffInSeconds % (3600 * 24)) / 3600);
+        const minutes = Math.floor((diffInSeconds % 3600) / 60);
+        const seconds = diffInSeconds % 60;
+
+        updatedTimes[
+          contest._id
+        ] = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      } else {
+        updatedTimes[contest._id] = "Starting Soon!";
+      }
+    });
+
+    setTimeLeft(updatedTimes);
   };
 
   const toggleBookmark = async (contestId: string) => {
@@ -72,11 +106,15 @@ function App() {
     const isPastContest = isPast(new Date(contest.startTime));
     if (showPastContests) {
       return (
-        isPastContest && new Date(contest.startTime) > addWeeks(new Date(), -1)
+        isPastContest &&
+        new Date(contest.startTime) > addWeeks(new Date(), -1) &&
+        selectedPlatforms.includes(contest.platform)
       );
     }
     return !isPastContest && selectedPlatforms.includes(contest.platform);
   });
+
+  console.log(filteredContests);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -160,8 +198,16 @@ function App() {
                       <span>
                         Starts: {format(new Date(contest.startTime), "PPP pp")}
                       </span>
-                      <span>
-                        Duration: {Math.floor(contest.duration / 60)} hours
+                      {contest.platform === "CodeChef" ? (
+                        <span>Duration: {contest.duration} hours</span>
+                      ) : (
+                        <span>
+                          Duration: {Math.floor(contest.duration / 3600)} hours
+                        </span>
+                      )}
+                      <span className="mt-2 text-sm font-semibold text-indigo-600">
+                        ⏳ Time Remaining:{" "}
+                        {timeLeft[contest._id] || "Calculating..."}
                       </span>
                     </div>
                   </div>
@@ -187,7 +233,7 @@ function App() {
                       <Bookmark className="w-5 h-5" />
                     </button>
                     <a
-                      href={contest.url}
+                      href={encodeURI(contest.url.trim())}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
