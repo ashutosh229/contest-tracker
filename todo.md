@@ -5,6 +5,7 @@
 - [X] filter implementation for the past contests 
 - [X] bookmark no implementation for the past 1 week contests 
 - [X] link population for youtube solution for past contest (bonus)
+- [X] past contests ke liye UI thik karna hai
 - [ ] manual addition of youtube links (alternative but no bonus)
 - [ ] reminder functionality
-- [ ] past contests ke liye UI thik karna hai
+- [ ] youtube solution link issue
