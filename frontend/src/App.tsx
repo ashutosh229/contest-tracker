@@ -76,7 +76,15 @@ function App() {
     setTimeLeft(updatedTimes);
   };
 
-  const toggleBookmark = async (contestId: string) => {
+  const toggleBookmark = async (
+    contestId: string,
+    contestStartTime: string
+  ) => {
+    const isPastContest = isPast(new Date(contestStartTime));
+    if (isPastContest) {
+      toast.error("Past contests cannot be bookmarked");
+      return;
+    }
     try {
       const response = await fetch(
         `${BACKEND_DOMAIN}/api/contest/${contestId}/bookmark`,
@@ -223,7 +231,9 @@ function App() {
                       </a>
                     )} */}
                     <button
-                      onClick={() => toggleBookmark(contest._id)}
+                      onClick={() =>
+                        toggleBookmark(contest._id, contest.startTime)
+                      }
                       className={`${
                         contest.isBookmarked
                           ? "text-yellow-400 hover:text-yellow-500"
