@@ -19,4 +19,5 @@ const ReminderSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Reminder", ReminderSchema);
+const reminder = mongoose.model("Reminder", ReminderSchema);
+export default reminder;
