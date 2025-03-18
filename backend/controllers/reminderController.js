@@ -67,27 +67,51 @@ export const deleteReminder = async (req, res) => {
   }
 };
 
-// Send Reminders (Manually Triggered or via Cron Job)
 export const sendReminders = async (_req, res) => {
   try {
-    const now = new Date().toISOString();
-    const contests = await Contest.find({ startTime: { $gte: now } }); // Get upcoming contests
+    const now = new Date();
 
+    // Fetch upcoming contests and group them by platform
+    const contests = await Contest.find({
+      startTime: { $gte: now.toISOString() },
+    });
+
+    if (!contests.length) {
+      return res
+        .status(200)
+        .json({ status: true, message: "No upcoming contests." });
+    }
+
+    const contestMap = new Map();
+
+    for (const contest of contests) {
+      if (!contestMap.has(contest.platform)) {
+        contestMap.set(contest.platform, []);
+      }
+      contestMap.get(contest.platform).push(contest);
+    }
+
+    // Fetch all reminders
     const reminders = await Reminder.find();
 
     for (const reminder of reminders) {
-      for (const contest of contests) {
-        if (reminder.platforms.includes(contest.platform)) {
+      const nowTime = now.getTime();
+
+      // Get contests for the platforms the user subscribed to
+      const relevantContests = reminder.platforms
+        .flatMap((platform) => contestMap.get(platform) || [])
+        .filter((contest) => {
           const timeUntilContest =
-            (new Date(contest.startTime).getTime() - new Date(now).getTime()) /
-            (1000 * 60);
-          if (timeUntilContest <= reminder.reminderTime) {
-            if (reminder.notificationMethod === "email") {
-              await sendEmail(reminder.email, contest);
-            } else if (reminder.notificationMethod === "sms") {
-              await sendSMS(reminder.phoneNumber, contest);
-            }
-          }
+            (new Date(contest.startTime).getTime() - nowTime) / (1000 * 60);
+          return timeUntilContest <= reminder.reminderTime;
+        });
+
+      // Send notifications only for filtered contests
+      for (const contest of relevantContests) {
+        if (reminder.notificationMethod === "email") {
+          await sendEmail(reminder.email, contest);
+        } else if (reminder.notificationMethod === "sms") {
+          await sendSMS(reminder.phoneNumber, contest);
         }
       }
     }
