@@ -1,6 +1,15 @@
 import Contest from "../models/contest.js";
 import { contestFetcher } from "../services/contestsFetcher.js";
 import mongoose from "mongoose";
+import { configDotenv } from "dotenv";
+import fetchSolutionsFromPlaylist from "../services/solutionLinkFetcher.js";
+
+configDotenv({
+  path: "../.env",
+});
+
+const codechefPlaylistId = process.env.CODECHEF_PLAYLIST;
+const codeforcesPlaylistId = process.env.CODEFORCES_PLAYLIST;
 
 export const getAllContests = async (req, res) => {
   try {
@@ -61,6 +70,35 @@ export const bookmarkContest = async (req, res) => {
     });
   } catch (error) {
     console.error("Error bookmarking the contest:", error);
+    res.status(500).json({
+      status: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+export const getContestSolution = async (req, res) => {
+  try {
+    const { platform, contestName } = req.query;
+
+    let playlistId;
+    if (platform === "CodeChef") playlistId = codechefPlaylistId;
+    else if (platform === "Codeforces") playlistId = codeforcesPlaylistId;
+    else
+      return res.status(400).json({ status: false, error: "Invalid platform" });
+
+    const solutionLink = await fetchSolutionsFromPlaylist(
+      playlistId,
+      contestName
+    );
+
+    return res.status(200).json({
+      status: true,
+      solutionLink: solutionLink,
+    });
+  } catch (error) {
+    console.log("Error fetching the solution from youtube", error);
     res.status(500).json({
       status: false,
       message: "Internal server error",

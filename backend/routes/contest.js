@@ -8,5 +8,6 @@ const contestRouter = express.Router();
 
 contestRouter.get("/get_all_contests", getAllContests);
 contestRouter.post("/:id/bookmark", bookmarkContest);
+contestRouter.get("/contest-solution",)
 
 export default contestRouter;
