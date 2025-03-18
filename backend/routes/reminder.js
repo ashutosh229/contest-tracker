@@ -1,10 +1,16 @@
 import express from "express";
+import {
+  createReminder,
+  deleteReminder,
+  getReminders,
+  sendReminders,
+} from "../controllers/reminderController";
 
 const reminderRouter = express.Router();
 
-reminderRouter.post("/create");
-reminderRouter.delete("/:id");
-reminderRouter.get("/");
-reminderRouter.post("/send");
+reminderRouter.post("/create", createReminder);
+reminderRouter.delete("/:id", deleteReminder);
+reminderRouter.get("/", getReminders);
+reminderRouter.post("/send", sendReminders);
 
 export default reminderRouter;
