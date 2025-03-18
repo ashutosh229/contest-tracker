@@ -88,15 +88,31 @@ export const getContestSolution = async (req, res) => {
     else
       return res.status(400).json({ status: false, error: "Invalid platform" });
 
-    const solutionLink = await fetchSolutionsFromPlaylist(
-      playlistId,
-      contestName
-    );
-
-    return res.status(200).json({
-      status: true,
-      solutionLink: solutionLink,
-    });
+    const result = await fetchSolutionsFromPlaylist(playlistId, contestName);
+    if (result.state === 1)
+      return res.status(200).json({
+        status: false,
+        message: "Solution is not available on Youtube",
+        solutionLink: result.solutionLink,
+      });
+    else if (result.state === 2) {
+      return res.status(200).json({
+        status: false,
+        message: "Video ID is not available",
+        solutionLink: result.solutionLink,
+      });
+    } else if (result.state === 3) {
+      return res.status(200).json({
+        status: true,
+        solutionLink: result.solutionLink,
+      });
+    } else {
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        solutionLink: result.solutionLink,
+      });
+    }
   } catch (error) {
     console.log("Error fetching the solution from youtube", error);
     res.status(500).json({

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar, Filter, Bookmark } from "lucide-react";
+import { Calendar, Filter, Bookmark, Youtube } from "lucide-react";
 
 import toast, { Toaster } from "react-hot-toast";
 import type { Contest } from "./types";
@@ -25,6 +25,12 @@ function App() {
     }, 1000);
     return () => clearInterval(timer);
   }, [contests]);
+
+  useEffect(() => {
+    if (showPastContests) {
+      fetchSolutionLinks(contests);
+    }
+  }, [showPastContests, contests]);
 
   const fetchContests = async () => {
     try {
@@ -76,6 +82,36 @@ function App() {
     setTimeLeft(updatedTimes);
   };
 
+  const fetchSolutionLinks = async (contestsData: Contest[]) => {
+    const pastContests = contestsData.filter((contest) =>
+      isPast(new Date(contest.startTime))
+    );
+
+    const updatedContests = await Promise.all(
+      pastContests.map(async (contest) => {
+        try {
+          const response = await fetch(
+            `${BACKEND_DOMAIN}/api/contest/contest_solution?platform=${
+              contest.platform
+            }&contestName=${encodeURIComponent(contest.name)}`
+          );
+          const data = await response.json();
+          if (data.status && data.solutionLink) {
+            return { ...contest, solutionUrl: data.solutionLink };
+          }
+        } catch (error) {
+          console.log(`Error fetching solution for ${contest.name}`, error);
+        }
+        return contest; // Return contest as-is if fetch fails
+      })
+    );
+
+    // Update state in one batch to avoid multiple re-renders
+    setContests((prev) =>
+      prev.map((c) => updatedContests.find((uc) => uc._id === c._id) || c)
+    );
+  };
+
   const toggleBookmark = async (
     contestId: string,
     contestStartTime: string
@@ -121,8 +157,6 @@ function App() {
     }
     return !isPastContest && selectedPlatforms.includes(contest.platform);
   });
-
-  console.log(filteredContests);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -203,9 +237,17 @@ function App() {
                       </h3>
                     </div>
                     <div className="mt-2 flex items-center gap-6 text-sm text-gray-500">
-                      <span>
-                        Starts: {format(new Date(contest.startTime), "PPP pp")}
-                      </span>
+                      {showPastContests ? (
+                        <span>
+                          Started:{" "}
+                          {format(new Date(contest.startTime), "PPP pp")}
+                        </span>
+                      ) : (
+                        <span>
+                          Starts:{" "}
+                          {format(new Date(contest.startTime), "PPP pp")}
+                        </span>
+                      )}
                       {contest.platform === "CodeChef" ? (
                         <span>Duration: {contest.duration} hours</span>
                       ) : (
@@ -213,14 +255,20 @@ function App() {
                           Duration: {Math.floor(contest.duration / 3600)} hours
                         </span>
                       )}
-                      <span className="mt-2 text-sm font-semibold text-indigo-600">
-                        ⏳ Time Remaining:{" "}
-                        {timeLeft[contest._id] || "Calculating..."}
-                      </span>
+                      {showPastContests ? (
+                        <span className="mt-2 text-sm font-semibold text-indigo-600">
+                          ⏳ Time Remaining: Already Over
+                        </span>
+                      ) : (
+                        <span className="mt-2 text-sm font-semibold text-indigo-600">
+                          ⏳ Time Remaining:{" "}
+                          {timeLeft[contest._id] || "Calculating..."}
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    {/* {contest.solutionUrl && (
+                    {contest.solutionUrl && (
                       <a
                         href={contest.solutionUrl}
                         target="_blank"
@@ -229,7 +277,7 @@ function App() {
                       >
                         <Youtube className="w-5 h-5" />
                       </a>
-                    )} */}
+                    )}
                     <button
                       onClick={() =>
                         toggleBookmark(contest._id, contest.startTime)

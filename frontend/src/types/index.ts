@@ -7,6 +7,7 @@ export interface Contest {
     url: string;
     isBookmarked?: boolean;
     __v: number;
+    solutionUrl: string
 }
 
 export interface User {
