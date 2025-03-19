@@ -101,6 +101,28 @@ cd backend
 npm run dev --debug
 ```
 
+## 🎯 Usage
+
+### 📅 View Upcoming and Past Contests
+- Navigate to the homepage to see **upcoming contests**.
+- Switch to the **past contests** section to see contests from the last 7 days.
+
+### 🔍 Filter Contests
+- Select one or more platforms (**Codeforces, CodeChef, LeetCode**) to filter contests.
+
+### ⭐ Bookmark Contests
+- Click the **bookmark button** to save a contest.
+- View your **bookmarked contests** via the **color of the bookmark icon**.
+
+### 📺 View Contest Solutions
+- **YouTube solutions** are automatically fetched from designated playlist 
+- **Solutions of the past contest** will be available without manual input.
+
+### ⏰ Set Up Contest Reminders
+- Sign up for **email/SMS reminders** for upcoming contests.
+- Choose when to receive the reminder (**1 hour or 30 minutes or any other custom time before the contest**).
+
+
 
 
 
