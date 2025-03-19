@@ -53,17 +53,17 @@ Before installing, ensure you have the following installed:
 ```sh
 git clone https://github.com/your-username/contest-tracker.git
 cd contest-tracker
+```
 
 ### 2️⃣ Install Dependencies
 
 ```sh 
 cd backend
 npm install
-
-```sh
+cd .. 
 cd frontend 
 npm install 
-
+cd .. 
 
 
 
