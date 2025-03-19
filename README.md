@@ -163,12 +163,10 @@ Test the changes before committing.
 git add .
 git commit -m "Added feature: description of the feature"
 ```
-
 6. **Push the changes to your fork**
 ```sh
 git push origin feature-name
 ```
-
 7. **Open a Pull Request**
 Go to the original repository on GitHub.
 Click on Pull Requests → New Pull Request.
