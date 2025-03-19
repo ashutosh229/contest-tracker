@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const platforms = ["Codeforces", "CodeChef"];
+const platforms = ["Codeforces", "CodeChef", "Leetcode"];
 
 const ReminderForm = () => {
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);

@@ -1,6 +1,6 @@
 export interface Contest {
     _id: string;
-    platform: 'Codeforces' | 'CodeChef'; //removed leetcode from here
+    platform: 'Codeforces' | 'CodeChef' | "Leetcode"; //removed leetcode from here
     name: string;
     startTime: string;
     duration: number;

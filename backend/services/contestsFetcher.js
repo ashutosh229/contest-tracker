@@ -57,7 +57,7 @@ export const contestFetcher = async () => {
       platform: "Leetcode",
       name: contest.event,
       startTime: parseDate(contest.start),
-      duration: contest.duration / (60 * 60), // Convert duration from seconds to minutes
+      duration: contest.duration / (60 * 60), // Convert duration from seconds to hours
       url: contest.href,
     });
     const upcomingContestsLeetcode = dataLeetcodeContests
@@ -75,7 +75,7 @@ export const contestFetcher = async () => {
     const pastWeekContestsLeetcode = dataLeetcodeContests
       .filter(
         (contest) =>
-          parseDate(contest.end) >= oneWeekAgo && parseDate(contest.end) < now
+          parseDate(contest.end) >= oneWeekAgo3 && parseDate(contest.end) < now
       )
       .map(transformContest);
 

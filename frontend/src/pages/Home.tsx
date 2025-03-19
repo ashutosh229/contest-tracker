@@ -204,7 +204,7 @@ const Home = () => {
             <h2 className="text-lg font-medium">Filter Platforms</h2>
           </div>
           <div className="mt-4 flex gap-4">
-            {["Codeforces", "CodeChef"].map((platform) => (
+            {["Codeforces", "CodeChef", "Leetcode"].map((platform) => (
               <label key={platform} className="inline-flex items-center">
                 <input
                   type="checkbox"
@@ -264,10 +264,12 @@ const Home = () => {
                       )}
                       {contest.platform === "CodeChef" ? (
                         <span>Duration: {contest.duration} hours</span>
-                      ) : (
+                      ) : contest.platform === "Codeforces" ? (
                         <span>
                           Duration: {Math.floor(contest.duration / 3600)} hours
                         </span>
+                      ) : (
+                        <span>Duration: {contest.duration} hours</span>
                       )}
                       {showPastContests ? (
                         <span className="mt-2 text-sm font-semibold text-indigo-600">
