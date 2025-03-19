@@ -10,6 +10,7 @@ configDotenv({
 
 const codechefPlaylistId = process.env.CODECHEF_PLAYLIST;
 const codeforcesPlaylistId = process.env.CODEFORCES_PLAYLIST;
+const leetcodePlaylistId = process.env.LEETCODE_PLAYLIST;
 
 export const getAllContests = async (req, res) => {
   try {
@@ -85,6 +86,7 @@ export const getContestSolution = async (req, res) => {
     let playlistId;
     if (platform === "CodeChef") playlistId = codechefPlaylistId;
     else if (platform === "Codeforces") playlistId = codeforcesPlaylistId;
+    else if (platform === "Leetcode") playlistId = leetcodePlaylistId;
     else
       return res.status(400).json({ status: false, error: "Invalid platform" });
 

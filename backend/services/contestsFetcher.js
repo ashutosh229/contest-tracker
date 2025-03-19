@@ -1,4 +1,6 @@
-import axios, { all } from "axios";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const contestFetcher = async () => {
   try {
@@ -36,7 +38,57 @@ export const contestFetcher = async () => {
       url: `https://www.codechef.com/${contest.contest_code}`,
     }));
 
-    const allContests = [...codeforcesContests, ...codechefContests];
+    const leetcodeResponse = await fetch(
+      `https://clist.by/api/v4/contest/?host=leetcode.com&username=${process.env.LEETCODE_API_USERNAME}&api_key=${process.env.LEETCODE_API_KEY}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!leetcodeResponse.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const dataLeetcode = await leetcodeResponse.json();
+    const dataLeetcodeContests = dataLeetcode.objects;
+    const now = new Date();
+    const parseDate = (dateString) => new Date(dateString);
+    const transformContest = (contest) => ({
+      platform: "Leetcode",
+      name: contest.event,
+      startTime: parseDate(contest.start),
+      duration: contest.duration / (60 * 60), // Convert duration from seconds to minutes
+      url: contest.href,
+    });
+    const upcomingContestsLeetcode = dataLeetcodeContests
+      .filter((contest) => parseDate(contest.start) > now)
+      .map(transformContest);
+    const ongoingContestsLeetcode = dataLeetcodeContests
+      .filter(
+        (contest) =>
+          parseDate(contest.start) <= now && parseDate(contest.end) >= now
+      )
+      .map(transformContest);
+
+    const oneWeekAgo3 = new Date();
+    oneWeekAgo3.setDate(now.getDate() - 7);
+    const pastWeekContestsLeetcode = dataLeetcodeContests
+      .filter(
+        (contest) =>
+          parseDate(contest.end) >= oneWeekAgo && parseDate(contest.end) < now
+      )
+      .map(transformContest);
+
+    const leetcodeContests = [
+      ...ongoingContestsLeetcode,
+      ...upcomingContestsLeetcode,
+    ];
+
+    const allContests = [
+      ...codeforcesContests,
+      ...codechefContests,
+      ...leetcodeContests,
+    ];
 
     const codeforcesResponseForPastContests = await fetch(
       "https://codeforces.com/api/contest.list",
@@ -89,6 +141,7 @@ export const contestFetcher = async () => {
     const allContestsForPast = [
       ...codeforcesContestsForPast,
       ...codechefContestsForPast,
+      ...pastWeekContestsLeetcode,
     ];
 
     const contests = [...allContests, ...allContestsForPast];

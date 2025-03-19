@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const contestSchema = new mongoose.Schema({
   platform: {
     type: String,
-    enum: ["Codeforces", "CodeChef"], //removed the leetcode from here
+    enum: ["Codeforces", "CodeChef", "Leetcode"], //removed the leetcode from here
     required: true,
   },
   name: {

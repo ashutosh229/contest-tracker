@@ -8,3 +8,5 @@
 - [X] past contests ke liye UI thik karna hai
 - [X] reminder functionality
 - [ ] youtube solution link issue
+- [ ] leetcode API integration 
+- [ ] final touch
