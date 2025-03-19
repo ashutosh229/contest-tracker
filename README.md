@@ -124,15 +124,15 @@ npm run dev --debug
 
 ## 📌 API Endpoints
 
-| Method | Endpoint                  | Description                           |
-|--------|---------------------------|---------------------------------------|
-| GET    | `/contests/upcoming`      | Fetch upcoming contests              |
-| GET    | `/contests/past`          | Fetch past contests (last 7 days)    |
-| POST   | `/contests/bookmark`      | Bookmark a contest                   |
-| GET    | `/contests/bookmarks`     | Get all bookmarked contests          |
-| POST   | `/contests/reminder`      | Set up a contest reminder            |
-| POST   | `/solutions/add`          | Add a YouTube solution manually      |
-| GET    | `/solutions/:contest_id`  | Get YouTube solutions for a contest  |
+| Method | Endpoint                       | Description                           |
+|--------|--------------------------------|---------------------------------------|
+| GET    | `/api/contest/get_all_contests`| Fetch upcoming contests               |
+| POST   | `/api/contest/:id/bookmark`    | Fetch past contests (last 7 days)     |
+| GET    | `/api/contest/contest_solution`| Bookmark a contest                    |
+| POST   | `/api/reminder/create`         | Get all bookmarked contests           |
+| DELETE | `/api/reminder/:id`            | Set up a contest reminder             |
+| GET    | `/api/reminder/`               | Add a YouTube solution manually       |
+| POST   | `/api/reminder/send`           | Get YouTube solutions for a contest   |
 
 
 
