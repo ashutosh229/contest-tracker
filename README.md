@@ -184,7 +184,7 @@ Delete the feature branch
 10. **Repeat the process**
 Repeat the steps again to make another PR
 
-## 🤝 Drive Link 
+## Drive Link 
 https://drive.google.com/drive/folders/18NHfZNZORQcMHRF3_eVJ-VbwiAF7l2dy?usp=drive_link
 
 
