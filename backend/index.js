@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import contestRouter from "./routes/contest.js";
 import cors from "cors";
 import reminderRouter from "./routes/reminder.js";
+import scheduleReminders from "./services/jobScheduler.js";
 
 connectDB();
 
@@ -18,6 +19,6 @@ app.use("/api/reminder", reminderRouter);
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`PORT: ${process.env.PORT}`);
-
   console.log(`Backend server is running on port ${port}`);
+  scheduleReminders();
 });
