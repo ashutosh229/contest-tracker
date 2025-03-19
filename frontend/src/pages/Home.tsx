@@ -272,9 +272,7 @@ const Home = () => {
                         <span>Duration: {contest.duration} hours</span>
                       )}
                       {showPastContests ? (
-                        <span className="mt-2 text-sm font-semibold text-indigo-600">
-                          ⏳ Time Remaining: Already Over
-                        </span>
+                        <span className="mt-2 text-sm font-semibold text-indigo-600"></span>
                       ) : (
                         <span className="mt-2 text-sm font-semibold text-indigo-600">
                           ⏳ Time Remaining:{" "}
