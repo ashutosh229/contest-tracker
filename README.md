@@ -134,6 +134,63 @@ npm run dev --debug
 | GET    | `/api/reminder/`               | Get all the reminders                               |
 | POST   | `/api/reminder/send`           | Send the notifications for the contests             |
 
+## 🤝 Contributing
+
+We welcome contributions to improve this project! Follow these steps to contribute:
+
+1. **Fork the Repository**  
+   Click the `Fork` button on the top right of this repository to create a copy in your GitHub account.
+
+2. **Clone the Repository**  
+   Clone your forked repository to your local system:  
+   ```sh
+   git clone https://github.com/your-username/repository-name.git
+   ```
+   Replace your-username with your GitHub username and repository-name with the forked repository name.
+
+3. **Create a New Branch**
+```sh
+git checkout -b feature-name
+```
+Replace feature-name with a meaningful name for your feature or fix.
+
+4. **Make Your Changes**
+Ensure your code follows best practices.
+Test the changes before committing.
+
+5. **Commit the changes**
+```sh
+git add .
+git commit -m "Added feature: description of the feature"
+```
+
+6. **Push the changes to your fork**
+```sh
+git push origin feature-name
+```
+
+7. **Open a Pull Request**
+Go to the original repository on GitHub.
+Click on Pull Requests → New Pull Request.
+Select your branch and submit the pull request with a meaningful description.
+
+8. **Wait for Review**
+Your PR will be reviewed by maintainers.
+Make changes if requested and update the PR accordingly.
+
+9. **Pull the merged code**
+After the PR is merged, change the branch to the dev branch
+Pull the recent changes from the original repository
+Delete the feature branch 
+
+10. **Repeat the process**
+Repeat the steps again to make another PR
+
+
+
+
+
+
 
 
 
