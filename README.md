@@ -122,8 +122,17 @@ npm run dev --debug
 - Sign up for **email/SMS reminders** for upcoming contests.
 - Choose when to receive the reminder (**1 hour or 30 minutes or any other custom time before the contest**).
 
+## 📌 API Endpoints
 
-
+| Method | Endpoint                  | Description                           |
+|--------|---------------------------|---------------------------------------|
+| GET    | `/contests/upcoming`      | Fetch upcoming contests              |
+| GET    | `/contests/past`          | Fetch past contests (last 7 days)    |
+| POST   | `/contests/bookmark`      | Bookmark a contest                   |
+| GET    | `/contests/bookmarks`     | Get all bookmarked contests          |
+| POST   | `/contests/reminder`      | Set up a contest reminder            |
+| POST   | `/solutions/add`          | Add a YouTube solution manually      |
+| GET    | `/solutions/:contest_id`  | Get YouTube solutions for a contest  |
 
 
 
