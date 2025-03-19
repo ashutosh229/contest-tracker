@@ -1,10 +1,9 @@
-import { Request, Response } from "express";
-import Reminder from "../models/reminder";
-import sendEmail from "../services/sendEmail";
-import sendSMS from "../services/sendSms";
-import Contest from "../models/contest";
+import Reminder from "../models/reminder.js";
+import sendEmail from "../services/sendEmail.js";
+import sendSMS from "../services/sendSms.js";
+import Contest from "../models/contest.js";
 
-// Create a new reminder
+// Create a new reminder (working)
 export const createReminder = async (req, res) => {
   try {
     const { email, phoneNumber, platforms, reminderTime, notificationMethod } =
@@ -42,7 +41,7 @@ export const createReminder = async (req, res) => {
   }
 };
 
-// Get all reminders
+// Get all reminders (working)
 export const getReminders = async (req, res) => {
   try {
     const reminders = await Reminder.find();
@@ -53,7 +52,7 @@ export const getReminders = async (req, res) => {
   }
 };
 
-// Delete a reminder
+// Delete a reminder (working)
 export const deleteReminder = async (req, res) => {
   try {
     const { id } = req.params;
@@ -67,6 +66,7 @@ export const deleteReminder = async (req, res) => {
   }
 };
 
+//working
 export const sendReminders = async (_req, res) => {
   try {
     const now = new Date();

@@ -3,6 +3,7 @@ import { Calendar, Filter, Bookmark, Youtube } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { Contest } from "@/types";
 import { format, isPast, addWeeks, differenceInSeconds } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const BACKEND_DOMAIN = "http://localhost:3000";
 
@@ -13,6 +14,8 @@ const Home = () => {
   ]);
   const [showPastContests, setShowPastContests] = useState(false);
   const [timeLeft, setTimeLeft] = useState<{ [key: string]: string }>({});
+
+  const navigator = useNavigate();
 
   useEffect(() => {
     fetchContests();
@@ -177,6 +180,18 @@ const Home = () => {
                 {showPastContests ? "Show Upcoming" : "Show Past Week"}
               </button>
             </div>
+            <button
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+              onClick={() => navigator("/reminder-list")}
+            >
+              Reminders List
+            </button>
+            <button
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+              onClick={() => navigator("/reminder-form")}
+            >
+              Subscribe to Reminders
+            </button>
           </div>
         </div>
       </header>

@@ -4,7 +4,7 @@ import {
   deleteReminder,
   getReminders,
   sendReminders,
-} from "../controllers/reminderController";
+} from "../controllers/reminderController.js";
 
 const reminderRouter = express.Router();
 
