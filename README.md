@@ -64,6 +64,29 @@ cd ..
 cd frontend 
 npm install 
 cd .. 
+```
+
+### 3️⃣ Set Up Environment Variables
+
+Create a .env file in the root of the backend folder and add:
+```sh
+PORT = 3000
+MONGODB_URI = your-mongodb-connection-string (prefer to setup cloud cluster and not local)
+YOUTUBE_API_KEY = youtube-api-key 
+CODECHEF_PLAYLIST = "PLcXpkI9A-RZIZ6lsE0KCcLWeKNoG45fYr"
+CODEFORCES_PLAYLIST = "PLcXpkI9A-RZLUfBSNp-YQBCOezZKbDSgB"
+LEETCODE_PLAYLIST = "PLcXpkI9A-RZI6FhydNz3JBt_-p_i25Cbr"
+SMTP_HOST = "smtp.gmail.com"
+SMTP_PORT = "465"
+EMAIL_USER = your-email-address
+EMAIL_PASS = your-generated-password
+TWILIO_SID = your-twilio-password
+TWILIO_AUTH_TOKEN = your-twilio-auth-token
+TWILIO_PHONE_NUMBER = your-twilio-auto-generated-phone-number
+BACKEND_DOMAIN = "http://localhost:3000"
+LEETCODE_API_USERNAME = leetcode-api-username
+LEETCODE_API_KEY = leetcode-api-key
+```
 
 
 
