@@ -88,6 +88,20 @@ LEETCODE_API_USERNAME = leetcode-api-username
 LEETCODE_API_KEY = leetcode-api-key
 ```
 
+### 4️⃣ Start the Application
+Frontend
+```sh 
+cd frontend 
+npm run dev --debug 
+```
+
+Backend
+```sh 
+cd backend 
+npm run dev --debug
+```
+
+
 
 
 
