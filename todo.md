@@ -7,6 +7,10 @@
 - [X] link population for youtube solution for past contest (bonus)
 - [X] past contests ke liye UI thik karna hai
 - [X] reminder functionality
+- [X] leetcode API integration 
 - [ ] youtube solution link issue
-- [ ] leetcode API integration 
 - [ ] final touch
+- [ ] thore se adjustments with the solution link and all show up
+- [ ] implementation of the alternative youtube functionality 
+- [ ] leetcode api issue solve karna hain 
+
