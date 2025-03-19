@@ -16,3 +16,10 @@ export const subscribeReminder = async (data: {
     const dataResponse = await response.json();
     return dataResponse
 }
+
+export const fetchReminders = async () => {
+    const response = await fetch(`${BACKEND_DOMAIN}/api/reminder/`);
+    if (!response.ok) throw new Error("Failed to fetch reminders");
+    const data = await response.json();
+    return data;
+};
